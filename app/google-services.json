@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "605717204377",
+    "project_id": "tnc-logging",
+    "storage_bucket": "tnc-logging.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:605717204377:android:da89af181e482f56149708",
+        "android_client_info": {
+          "package_name": "com.example.tnc"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "605717204377-onpvd24j1ghdgvu27jk0ffuibss1h368.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC_jsPrpk7FFJN-Cmi8I8yD7rtzqf-yUzM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "605717204377-onpvd24j1ghdgvu27jk0ffuibss1h368.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

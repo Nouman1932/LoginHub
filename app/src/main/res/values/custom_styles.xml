@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Circular">
+        <item name="cornerSize">50%</item>
+    </style>
+    <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+    <style name="MyAlertDialog" parent="Theme.AppCompat.Dialog">
+        <item name="colorPrimary">#424242</item>
+        <item name="colorAccent">#DBBF04</item>
+        <item name="android:background">#424242</item>
+        <item name="android:textColor">#EFEBEB</item>
+        <item name="android:fontFamily">sans-serif</item>
+    </style>
+</resources>

@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Login Hub</string>
+    <string name="profileManager">Profile Manager</string>
+
+    <!-- to toggle the open close button of the navigation drawer -->
+    <string name="open">Open</string>
+    <string name="close">Close</string>
+
+    // For Facebook
+    <string name="facebook_app_id">317966310741637</string>
+    <string name="fb_login_protocol_scheme">fb317966310741637</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+</resources>

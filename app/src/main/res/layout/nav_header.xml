@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/_150sdp"
+    android:background="@color/themecolor"
+    android:orientation="vertical"
+    android:padding="@dimen/_10sdp">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/rMenuprofileImageView"
+        android:layout_width="@dimen/_70sdp"
+        android:layout_height="@dimen/_70sdp"
+        android:scaleType="centerCrop"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:layout_gravity="left"
+        android:padding="@dimen/_5sdp"
+        android:src="@drawable/defaultprofile"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:shapeAppearanceOverlay="@style/Circular"
+        app:strokeColor="@color/black"
+        app:strokeWidth="@dimen/_2sdp"/>
+
+        <TextView
+            android:id="@+id/userNameTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="User Name"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:textSize="@dimen/_20sdp"
+            />
+
+        <TextView
+            android:id="@+id/userEmailTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="email@gmil.com"
+            android:textColor="#3A3202"/>
+</LinearLayout>
