@@ -108,7 +108,7 @@ class ProfileFragment : Fragment(){
 
         setEditTextsEditable(false)
         editProfileButton.setOnClickListener {
-            isEditing = !isEditing
+//            isEditing = !isEditing
             setEditMode(!isEditing)
         }
         saveProfileButton.setOnClickListener {
