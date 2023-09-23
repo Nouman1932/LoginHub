@@ -13,4 +13,9 @@
         <item name="android:textColor">#EFEBEB</item>
         <item name="android:fontFamily">sans-serif</item>
     </style>
+    <style name="LoginTextStyle">
+<!--        <item name="android:fontStyle">normal</item>-->
+<!--        <item name="android:fontWeight">500</item>-->
+        <item name="android:fontFamily">@font/mooli</item>
+    </style>
 </resources>

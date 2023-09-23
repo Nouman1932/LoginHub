@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="@dimen/_5sdp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/rounded_background"
+    android:layout_marginTop="@dimen/_5sdp"
+    android:layout_marginRight="@dimen/_12sdp"
+    android:layout_marginLeft="@dimen/_12sdp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/cardProfileImageView"
+            android:layout_width="@dimen/_70sdp"
+            android:layout_height="@dimen/_70sdp"
+            android:padding="@dimen/_4sdp"
+            android:src="@drawable/defaultprofile"
+            app:shapeAppearanceOverlay="@style/Circular"
+            app:strokeColor="@color/teal_200"
+            app:strokeWidth="@dimen/_2sdp"
+            android:layout_marginRight="@dimen/_10sdp"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="@dimen/_5sdp">
+            <TextView
+                android:id="@+id/nameTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:text="Name"
+                android:textSize="@dimen/_18ssp"/>
+            <TextView
+                android:id="@+id/emailTextView"
+                android:textColor="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Person Email"/>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

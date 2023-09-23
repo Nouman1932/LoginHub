@@ -3,9 +3,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/_150sdp"
-    android:background="@color/themecolor"
+    android:layout_height="@dimen/_180sdp"
     android:orientation="vertical"
+    android:background="@drawable/background_with_image"
     android:padding="@dimen/_10sdp">
 
     <com.google.android.material.imageview.ShapeableImageView
@@ -13,7 +13,7 @@
         android:layout_width="@dimen/_70sdp"
         android:layout_height="@dimen/_70sdp"
         android:scaleType="centerCrop"
-        android:layout_marginTop="@dimen/_15sdp"
+        android:layout_marginTop="@dimen/_30sdp"
         android:layout_gravity="left"
         android:padding="@dimen/_5sdp"
         android:src="@drawable/defaultprofile"
@@ -21,7 +21,7 @@
         android:focusable="true"
         app:layout_constraintHorizontal_bias="0.5"
         app:shapeAppearanceOverlay="@style/Circular"
-        app:strokeColor="@color/black"
+        app:strokeColor="#00637C"
         app:strokeWidth="@dimen/_2sdp"/>
 
         <TextView
@@ -29,7 +29,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="User Name"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textStyle="bold"
             android:textSize="@dimen/_20sdp"
             />
@@ -39,5 +39,5 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="email@gmil.com"
-            android:textColor="#3A3202"/>
+            android:textColor="@color/white"/>
 </LinearLayout>

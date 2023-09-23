@@ -12,14 +12,14 @@ import com.google.firebase.auth.FirebaseAuth
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import android.widget.ImageView
+import android.widget.SearchView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.widget.DialogTitle
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
@@ -36,6 +36,7 @@ import com.google.firebase.ktx.Firebase
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import org.json.JSONObject
+import java.util.Locale.filter
 
 
 class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -139,9 +140,8 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 val userEmailTextView = findViewById<TextView>(R.id.userEmailTextView)
                 val rMenuprofileImageView = findViewById<ImageView>(R.id.rMenuprofileImageView)
 
-                val firstName = documentSnapshot.getString("firstname")
-                val lastName = documentSnapshot.getString("lastname")
-                val fullName = "$firstName $lastName"
+                val fullName = documentSnapshot.getString("FullName")
+
                 userNameTextView.text = fullName
                 userEmailTextView.text = documentSnapshot.getString("email")
 
@@ -321,4 +321,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         alertDialog.setNegativeButton("No", null) // User clicked "No," do nothing
         alertDialog.show()
     }
+
+
+
 }// end

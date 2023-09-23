@@ -1,3 +1,5 @@
+//Main activity
+
 package com.example.tnc
 
 import android.app.ProgressDialog
@@ -5,6 +7,7 @@ import android.content.Intent
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Patterns
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
@@ -20,24 +23,31 @@ class MainActivity : AppCompatActivity() {
     private lateinit var builder: AlertDialog.Builder
     private lateinit var auth: FirebaseAuth
 
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        authHelper = AuthHelper(this)
-
-        builder = AlertDialog.Builder(this, R.style.MyAlertDialog)
-
+        // Initialize your UI elements
         emailEditText = findViewById(R.id.emailEditText)
         passwordEditText = findViewById(R.id.passwordEditText)
 
+        // Add TextValidationWatcher to email EditText
+        emailEditText.addTextChangedListener(TextValidationWatcher(emailEditText) { text ->
+            val isValid = isValidEmail(text)
+            isValid // Return the validation result as a Boolean
+        })
+
+        // Add TextValidationWatcher to password EditText
+        passwordEditText.addTextChangedListener(TextValidationWatcher(passwordEditText) { text ->
+            text.length >= 6
+        })
+
+        authHelper = AuthHelper(this)
+        builder = AlertDialog.Builder(this, R.style.MyAlertDialog)
         progressDialog = ProgressDialog(this)
         progressDialog.setTitle("Logging In")
         progressDialog.setMessage("Please wait...")
         progressDialog.setCancelable(false)
-
         auth = FirebaseAuth.getInstance()
 
         val loginButton = findViewById<Button>(R.id.loginButton)
@@ -48,7 +58,7 @@ class MainActivity : AppCompatActivity() {
             val email = emailEditText.text.toString()
             val password = passwordEditText.text.toString()
 
-            if (email.isNotEmpty() && password.isNotEmpty()) {
+            if (isInputValid(email, password)) {
                 signIn(email, password)
             } else {
                 builder.setTitle("Please enter both your email and password to continue.")
@@ -94,7 +104,9 @@ class MainActivity : AppCompatActivity() {
                 }
             }
     }
-
+    private fun isInputValid(email: String, password: String): Boolean {
+        return isValidEmail(email) && password.length >= 6
+    }
     private fun navigateToProfilePage() {
         // Create an Intent object
         val intent = Intent(this, HomeActivity::class.java)
@@ -108,6 +120,10 @@ class MainActivity : AppCompatActivity() {
     fun goToSignUp(view: View) {
         val intent = Intent(this, SignUp::class.java)
         startActivity(intent)
+    }
+    fun isValidEmail(email: String): Boolean {
+        val pattern = Patterns.EMAIL_ADDRESS
+        return pattern.matcher(email).matches()
     }
 
 

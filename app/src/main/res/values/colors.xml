@@ -7,7 +7,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="themecolor">#DBBF04</color>
     <color name="activityBackground">#424242</color>
-    <color name="colorEnabledButton">#DBBF04</color>
-    <color name="colorDisabledButton">#998606</color>
+    <color name="colorEnabledButton">@color/teal_200</color>
+    <color name="colorDisabledButton">#01655B</color>
     <color name="my_red">#FF0000</color>
 </resources>

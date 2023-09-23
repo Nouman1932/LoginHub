@@ -5,9 +5,12 @@ package com.example.tnc
 import android.app.ProgressDialog
 import android.content.ContentValues
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import android.view.View
 import android.widget.Button
@@ -18,17 +21,16 @@ import com.google.android.material.imageview.ShapeableImageView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
+import java.io.ByteArrayOutputStream
 
 class SignUp : AppCompatActivity(){
     private lateinit var auth: FirebaseAuth
     private lateinit var firestore: FirebaseFirestore
     private lateinit var storage: FirebaseStorage
 
-    private lateinit var fnameEditText: EditText
-    private lateinit var lnameEditText: EditText
+    private lateinit var fullNameEditText: EditText
     private lateinit var emailEditText: EditText
     private lateinit var passwordEditText: EditText
-    private lateinit var confirmPasswordEditText: EditText
     private lateinit var phoneEditText: EditText
     private lateinit var registerBtn: Button
     private lateinit var profileImageView: ShapeableImageView
@@ -48,11 +50,9 @@ class SignUp : AppCompatActivity(){
         firestore = FirebaseFirestore.getInstance()
         storage = FirebaseStorage.getInstance()
 
-        fnameEditText = findViewById(R.id.firstNameEditText)
-        lnameEditText = findViewById(R.id.lastNameEditText)
+        fullNameEditText = findViewById(R.id.fullNameEditText)
         emailEditText = findViewById(R.id.emailEditText)
         passwordEditText = findViewById(R.id.passwordEditText)
-        confirmPasswordEditText = findViewById(R.id.confirmPasswordEditText)
         phoneEditText = findViewById(R.id.phoneEditText)
 
         profileImageView = findViewById(R.id.profileImageView)
@@ -65,21 +65,16 @@ class SignUp : AppCompatActivity(){
         }
     }//End oncreate
     private fun saveUserData() {
-        val fName = fnameEditText.text.toString().trim()
-        val lName = lnameEditText.text.toString().trim()
+        val fullName = fullNameEditText.text.toString().trim()
         val email = emailEditText.text.toString().trim()
         val password = passwordEditText.text.toString().trim()
         val phone = phoneEditText.text.toString().trim()
-        val confirmPassword = confirmPasswordEditText.text.toString().trim()
         // Check Email format
-        if (fName.isEmpty()) {
+        if (fullName.isEmpty()) {
             Toast.makeText(this, "Please enter your First name", Toast.LENGTH_SHORT).show()
             return
         }
-        if (lName.isEmpty()) {
-            Toast.makeText(this, "Please enter your Last name", Toast.LENGTH_SHORT).show()
-            return
-        }
+
         if (phone.isEmpty()) {
             Toast.makeText(this, "Please enter your PhoneNo", Toast.LENGTH_SHORT).show()
             return
@@ -97,10 +92,7 @@ class SignUp : AppCompatActivity(){
             Toast.makeText(this, "Please enter your Email", Toast.LENGTH_SHORT).show()
             return
         }
-        if (confirmPassword.isEmpty()) {
-            Toast.makeText(this, "Please enter your ConfirmPassword", Toast.LENGTH_SHORT).show()
-            return
-        }
+
         if (!isEmailValid(email)) {
             Toast.makeText(this, "Invalid email format", Toast.LENGTH_SHORT).show()
             return
@@ -111,12 +103,7 @@ class SignUp : AppCompatActivity(){
             passwordEditText.requestFocus()
             return
         }
-        // check Match Password
-        if (password != confirmPassword) {
-            Toast.makeText(this, "Passwords do not match", Toast.LENGTH_SHORT).show()
-            passwordEditText.requestFocus()
-            return
-        }
+
 
         // Check if email already exists in Firestore
         checkEmailExists(email)
@@ -130,6 +117,7 @@ class SignUp : AppCompatActivity(){
         progressDialog.show()
 
         if (selectedImageUri != null) {
+
             val uploadTask = profileImageRef.putFile(selectedImageUri)
             uploadTask.addOnSuccessListener { taskSnapshot ->
                 // Image upload successful, get the download URL
@@ -151,8 +139,7 @@ class SignUp : AppCompatActivity(){
                                 val documentReference = firestore.collection("UserProfileData")
                                     .document(userID.toString())
                                 val user = mutableMapOf<String, Any>()
-                                user["firstname"] = fName
-                                user["lastname"] = lName
+                                user["FullName"] = fullName
                                 user["email"] = email
                                 user["phone"] = phone
                                 user["profile_image_url"] = imageUrl // Store the image URL
@@ -211,14 +198,7 @@ class SignUp : AppCompatActivity(){
         intent.type = "image/*"  // Set the MIME type to restrict to images only
         resultLauncher.launch(intent)
     }// End selectImage
-    private fun clearFields() {
-        fnameEditText.text.clear()
-        lnameEditText.text.clear()
-        emailEditText.text.clear()
-        passwordEditText.text.clear()
-        confirmPasswordEditText.text.clear()
-        phoneEditText.text.clear()
-    }
+
     private fun checkEmailExists(email: String) {
         firestore.collection("UserProfileData")
             .whereEqualTo("email", email)

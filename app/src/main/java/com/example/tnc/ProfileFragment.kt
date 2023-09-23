@@ -19,21 +19,15 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
-import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.widget.Toolbar
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import com.facebook.AccessToken
-import com.facebook.FacebookSdk
 import com.facebook.GraphRequest
 import com.facebook.GraphResponse
-import com.facebook.appevents.AppEventsLogger
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
@@ -43,13 +37,13 @@ import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import org.json.JSONObject
 
+
 class ProfileFragment : Fragment(){
     private lateinit var auth: FirebaseAuth
     private lateinit var googleSignInClient: GoogleSignInClient
     private lateinit var firestore: FirebaseFirestore
 
-    private lateinit var firstNameEditText: EditText
-    private lateinit var lastNameEditText: EditText
+    private lateinit var fullNameEditText: EditText
     private lateinit var emailEditText: EditText
     private lateinit var phoneEditText: EditText
     private lateinit var passwordEditText: EditText
@@ -90,8 +84,7 @@ class ProfileFragment : Fragment(){
         saveProfileButton.setBackgroundColor(disabledColor)
 
         // Initialize EditText fields
-        firstNameEditText = view.findViewById(R.id.firstNameEditText)
-        lastNameEditText = view.findViewById(R.id.lastNameEditText)
+        fullNameEditText = view.findViewById(R.id.fullNameEditText)
         emailEditText = view.findViewById(R.id.emailEditText)
         phoneEditText = view.findViewById(R.id.phoneEditText)
         passwordEditText = view.findViewById(R.id.passwordEditText)
@@ -178,8 +171,7 @@ class ProfileFragment : Fragment(){
         val documentReference= firestore.collection("UserProfileData").document(userID.toString())
         documentReference.get().addOnSuccessListener {
             if (it != null) {
-                firstNameEditText.setText(it.data?.get("firstname")?.toString())
-                lastNameEditText.setText(it.data?.get("lastname")?.toString())
+                fullNameEditText.setText(it.data?.get("FullName")?.toString())
                 phoneEditText.setText(it.data?.get("phone")?.toString())
                 emailEditText.setText(it.data?.get("email")?.toString())
 
@@ -210,13 +202,8 @@ class ProfileFragment : Fragment(){
                         val accessToken = AccessToken.getCurrentAccessToken()
                         val profilePictureUrl = accessToken?.userId?.let { "https://graph.facebook.com/$it/picture?type=large" }
 
-                        val nameParts = name.split(" ")
-                        val firstName = nameParts.getOrElse(0) { "" }
-                        val lastName = nameParts.getOrNull(1) ?: ""
-
                         // Set the first name and last name in your EditText fields
-                        firstNameEditText.setText(firstName)
-                        lastNameEditText.setText(lastName)
+                        fullNameEditText.setText(name)
                         emailEditText.setText(email)
 
                         // Load and display the profile picture
@@ -262,7 +249,6 @@ class ProfileFragment : Fragment(){
             val email = googleSignInAccount.email
             val photoUrl = googleSignInAccount.photoUrl // Get the profile image URL
 
-
             // Load and display the profile image if the URL is not null
             if (photoUrl != null) {
                 Picasso.get().load(photoUrl).into(profileImageView)// Use Picasso to load the image
@@ -271,15 +257,8 @@ class ProfileFragment : Fragment(){
                 // If the URL is null, you can provide a default image or handle it as needed
                 profileImageView.setImageResource(R.drawable.profilepic)
             }
-            // Set the first name and last name in the EditText fields
-            val nameParts = displayName?.split(" ")
-            if (nameParts?.size == 2) {
-                firstNameEditText.setText(nameParts[0])
-                lastNameEditText.setText(nameParts[1])
-            }
-
-            // Set the email in the email EditText field
             emailEditText.setText(email)
+            fullNameEditText.setText(displayName)
 
             phoneEditText.visibility = View.GONE
             passwordEditText.visibility = View.GONE
@@ -291,8 +270,7 @@ class ProfileFragment : Fragment(){
         }
     }
     private fun setEditTextsEditable(editable: Boolean) {
-        firstNameEditText.isEnabled = editable
-        lastNameEditText.isEnabled = editable
+        fullNameEditText.isEnabled = editable
         emailEditText.isEnabled = editable
         phoneEditText.isEnabled = editable
         profileImageView.isEnabled = editable
@@ -327,8 +305,7 @@ class ProfileFragment : Fragment(){
         val userId = firebaseUser?.uid ?: ""
 
         // Get the values of the EditText fields
-        val firstName = firstNameEditText.text.toString()
-        val lastName = lastNameEditText.text.toString()
+        val fullName = fullNameEditText.text.toString()
         val email = emailEditText.text.toString()
         val phone = phoneEditText.text.toString()
 //        val profileImageView = view.findViewById<ImageView>(R.id.profileImageView)
@@ -343,15 +320,11 @@ class ProfileFragment : Fragment(){
             Toast.makeText(requireContext(), "Please enter a valid email address", Toast.LENGTH_SHORT).show()
             return
         }
-        if (firstName.isEmpty()) {
-            Toast.makeText(requireContext(),  "Please enter your first name", Toast.LENGTH_SHORT).show()
+        if (fullName.isEmpty()) {
+            Toast.makeText(requireContext(),  "Please enter your name", Toast.LENGTH_SHORT).show()
             return
         }
         // Check if the last name field is empty
-        if (lastName.isEmpty()) {
-            Toast.makeText(requireContext(), "Please enter your last name", Toast.LENGTH_SHORT).show()
-            return
-        }
         // Check if the phone number field is empty
         if (phone.isEmpty()) {
             Toast.makeText(requireContext(),  "Please enter your phone number", Toast.LENGTH_SHORT).show()
@@ -391,8 +364,7 @@ class ProfileFragment : Fragment(){
 
                                 // Update the user's data in Firebase Firestore
                                 val userData = mapOf(
-                                    "firstname" to firstName,
-                                    "lastname" to lastName,
+                                    "FullName" to fullName,
                                     "phone" to phone,
                                     "email" to email,
                                     "profile_image_url" to imageUrl // Update the profile image URL
@@ -423,8 +395,7 @@ class ProfileFragment : Fragment(){
 
                     // Update the user's data in Firebase Firestore (excluding profileImageUrl)
                     val userData = mapOf(
-                        "firstname" to firstName,
-                        "lastname" to lastName,
+                        "FullName" to fullName,
                         "phone" to phone,
                         "email" to email
                     )
@@ -437,7 +408,6 @@ class ProfileFragment : Fragment(){
             }
         }
     }
-
     private fun showConfirmationDialog(newPassword: String) {
         AlertDialog.Builder(requireContext())
             .setTitle("Confirm Password Change")
