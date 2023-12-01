@@ -10,12 +10,17 @@
         <item name="colorPrimary">#424242</item>
         <item name="colorAccent">#DBBF04</item>
         <item name="android:background">#424242</item>
-        <item name="android:textColor">#EFEBEB</item>
-        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textColor">@color/teal_200</item>
+        <item name="android:fontFamily">@font/mooli</item>
     </style>
     <style name="LoginTextStyle">
 <!--        <item name="android:fontStyle">normal</item>-->
 <!--        <item name="android:fontWeight">500</item>-->
         <item name="android:fontFamily">@font/mooli</item>
     </style>
+
+    <style name="BottomSheetDialogTheme" parent="Theme.Design.BottomSheetDialog">
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
 </resources>

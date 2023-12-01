@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="@dimen/_5sdp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/rounded_background"
+    android:layout_marginTop="@dimen/_5sdp"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/cardProfileImageView"
+            android:layout_width="@dimen/_70sdp"
+            android:layout_height="@dimen/_70sdp"
+            android:padding="@dimen/_4sdp"
+            android:src="@drawable/defaultprofile"
+            app:shapeAppearanceOverlay="@style/Circular"
+            app:strokeColor="@color/teal_200"
+            app:strokeWidth="@dimen/_2sdp"
+            android:layout_marginRight="@dimen/_10sdp"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/nameTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#DADCE1"
+                android:text="User Name"
+                android:textSize="@dimen/_15ssp"/>
+            <TextView
+                android:id="@+id/dateTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#DADCE1"
+                android:text="Selected Date"
+                android:textSize="@dimen/_15sdp"
+                android:drawableRight="@drawable/globe"
+                android:drawableTint="#B0B3B8"
+                android:drawablePadding="@dimen/_5sdp" />
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:layout_marginRight="@dimen/_5sdp"
+            android:layout_marginLeft="@dimen/_5sdp"
+            android:layout_marginBottom="@dimen/_5sdp"
+            android:background="#8E8E8E"/>
+        <TextView
+            android:id="@+id/commentTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_15sdp"
+            android:text="comment"
+            android:textSize="@dimen/_12sdp"
+            android:textColor="#E4E6EB"
+            android:background="@android:color/transparent" />
+
+
+    </LinearLayout>
+    <Button
+        android:id="@+id/deleteUser"
+        android:layout_width="@dimen/_45sdp"
+        android:layout_height="@dimen/_35sdp"
+        android:layout_gravity="right"
+        android:drawableTint="#F6F9FF"
+        android:textAllCaps="false"
+        android:drawableTop="@drawable/remove"
+        android:backgroundTint="#6A6A6A"
+        app:cornerRadius="5dp"
+        />
+</LinearLayout>

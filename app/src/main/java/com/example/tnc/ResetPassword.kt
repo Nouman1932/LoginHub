@@ -7,22 +7,32 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.google.firebase.auth.FirebaseAuth
 
 class ResetPassword : AppCompatActivity() {
 
+
+    private lateinit var authHelper: AuthHelper
     private lateinit var emailEditText: EditText
     private lateinit var resetButton: Button
     private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var builder: AlertDialog.Builder
     private lateinit var progressDialog: ProgressDialog
-    private lateinit var authHelper: AuthHelper
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_reset_password)
+        authHelper = AuthHelper(this)
+
+        val backToLoginTextView: TextView = findViewById(R.id.backToLogin)
+        backToLoginTextView.setOnClickListener {
+            // Handle the click event, navigate back to the login screen
+            backToLogin()
+        }
 
 
         emailEditText = findViewById(R.id.emailEditText)
@@ -30,9 +40,10 @@ class ResetPassword : AppCompatActivity() {
         firebaseAuth = FirebaseAuth.getInstance()
         builder = AlertDialog.Builder(this, R.style.MyAlertDialog)
 
-        val googleSignInButton = findViewById<Button>(R.id.googleSignInButton)
-        val fbLoginButton = findViewById<Button>(R.id.fbLoginBtn)
-        authHelper = AuthHelper(this)
+        val googleSignInButton = findViewById<Button>(R.id.rpgoogleSignInButton)
+        val fbLoginButton = findViewById<Button>(R.id.rpfbLoginBtn)
+
+
         googleSignInButton.setOnClickListener {
             authHelper.signInWithGoogle()
         }
@@ -53,6 +64,10 @@ class ResetPassword : AppCompatActivity() {
 
     }
     fun backToLogin(view: View) {
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+    }
+    fun backToLogin() {
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
     }

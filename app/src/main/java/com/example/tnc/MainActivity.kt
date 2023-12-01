@@ -44,10 +44,12 @@ class MainActivity : AppCompatActivity() {
 
         authHelper = AuthHelper(this)
         builder = AlertDialog.Builder(this, R.style.MyAlertDialog)
+
         progressDialog = ProgressDialog(this)
         progressDialog.setTitle("Logging In")
         progressDialog.setMessage("Please wait...")
         progressDialog.setCancelable(false)
+
         auth = FirebaseAuth.getInstance()
 
         val loginButton = findViewById<Button>(R.id.loginButton)

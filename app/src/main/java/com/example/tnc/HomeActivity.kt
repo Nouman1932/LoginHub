@@ -136,18 +136,23 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         documentListener = documentReference.addSnapshotListener { documentSnapshot, _ ->
             if (documentSnapshot != null && documentSnapshot.exists()) {
-                val userNameTextView = findViewById<TextView>(R.id.userNameTextView)
-                val userEmailTextView = findViewById<TextView>(R.id.userEmailTextView)
-                val rMenuprofileImageView = findViewById<ImageView>(R.id.rMenuprofileImageView)
+                // Check if activity is still alive
+                if (!isFinishing && !isDestroyed) {
+                    val userNameTextView = findViewById<TextView>(R.id.userNameTextView)
+                    val userEmailTextView = findViewById<TextView>(R.id.userEmailTextView)
+                    val rMenuprofileImageView = findViewById<ImageView>(R.id.rMenuprofileImageView)
 
-                val fullName = documentSnapshot.getString("FullName")
+                    // Check if views are not null
+                    userNameTextView?.text = documentSnapshot.getString("FullName")
+                    userEmailTextView?.text = documentSnapshot.getString("email")
 
-                userNameTextView.text = fullName
-                userEmailTextView.text = documentSnapshot.getString("email")
-
-                val profileImageUrl = documentSnapshot.getString("profile_image_url")
-                if (profileImageUrl != null) {
-                    Picasso.get().load(profileImageUrl).into(rMenuprofileImageView)
+                    val profileImageUrl = documentSnapshot.getString("profile_image_url")
+                    if (profileImageUrl != null) {
+                        // Use Picasso only if ImageView is not null
+                        rMenuprofileImageView?.let {
+                            Picasso.get().load(profileImageUrl).into(it)
+                        }
+                    }
                 }
             }
         }
@@ -268,6 +273,12 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.nav_profile -> {
                 setToolbarTitle("Profile")
                 val fragment = ProfileFragment()
+                val fragmentManager = supportFragmentManager
+                fragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit()
+            }
+            R.id.nav_eventAdd -> {
+                setToolbarTitle("Event")
+                val fragment = FragmentEvent()
                 val fragmentManager = supportFragmentManager
                 fragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit()
             }

@@ -97,32 +97,34 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:layout_marginTop="@dimen/_30sdp">
+        android:layout_marginTop="@dimen/_50sdp"
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/fbLoginBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="5dp"
-            android:backgroundTint="#FFFFFF"
-            android:drawableLeft="@drawable/facebook"
-            android:text="Login with Facebook"
-            android:textAllCaps="false"
-            android:textColor="#4C4C4C"
-            android:textSize="@dimen/_8ssp"
-            app:cornerRadius="5dp" />
-
-        <Button
-            android:id="@+id/googleSignInButton"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="@dimen/_40sdp"
             android:backgroundTint="@color/white"
             android:text="Login with Google"
             android:textColor="#4C4C4C"
+            android:textSize="@dimen/_8ssp"
             app:cornerRadius="5dp"
             android:textAllCaps="false"
+            android:drawableLeft="@drawable/facebook"/>
+
+        <Button
+            android:id="@+id/googleSignInButton"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="@dimen/_40sdp"
+            android:backgroundTint="@color/white"
+            android:layout_marginLeft="@dimen/_3sdp"
+            android:text="Login with Google"
+            android:textColor="#4C4C4C"
             android:textSize="@dimen/_8ssp"
+            app:cornerRadius="5dp"
+            android:textAllCaps="false"
             android:drawableLeft="@drawable/google"/>
     </LinearLayout>
 

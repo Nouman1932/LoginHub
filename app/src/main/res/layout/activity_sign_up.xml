@@ -13,7 +13,7 @@
     <com.google.android.material.imageview.ShapeableImageView
         android:layout_gravity="center"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_50sdp"
+        android:layout_height="@dimen/_100sdp"
         android:padding="@dimen/_5sdp"
         android:src="@drawable/signup"
         />
@@ -34,8 +34,8 @@
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/profileImageView"
-        android:layout_width="@dimen/_60sdp"
-        android:layout_height="@dimen/_55sdp"
+        android:layout_width="@dimen/_80sdp"
+        android:layout_height="@dimen/_75sdp"
         android:scaleType="centerCrop"
         android:layout_gravity="center"
         android:padding="@dimen/_5sdp"

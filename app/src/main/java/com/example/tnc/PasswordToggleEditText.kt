@@ -5,11 +5,16 @@ import android.graphics.drawable.Drawable
 import android.text.method.PasswordTransformationMethod
 import android.util.AttributeSet
 import android.view.MotionEvent
+import androidx.appcompat.content.res.AppCompatResources
+import androidx.core.content.res.ResourcesCompat
+import androidx.core.view.ViewCompat
 import androidx.appcompat.widget.AppCompatEditText
 
 class PasswordToggleEditText : AppCompatEditText {
     private var passwordVisible = false
     private var toggleDrawable: Drawable? = null
+    private var cursorStart: Int = 0
+    private var cursorEnd: Int = 0
 
     constructor(context: Context) : super(context) {
         init()
@@ -25,33 +30,43 @@ class PasswordToggleEditText : AppCompatEditText {
 
     private fun init() {
         toggleDrawable = compoundDrawablesRelative[2] // Assuming the drawable is at the right
+
         setOnTouchListener { _, event ->
             if (event.action == MotionEvent.ACTION_UP && toggleDrawable != null) {
-                if (event.x >= (right - paddingRight - toggleDrawable!!.intrinsicWidth)) {
+                if (event.rawX >= (right - paddingRight - toggleDrawable!!.intrinsicWidth)) {
                     togglePasswordVisibility()
+                    performClick()
                     return@setOnTouchListener true
                 }
             }
             false
         }
+        ViewCompat.setBackground(this, ResourcesCompat.getDrawable(resources, R.drawable.edittext_border_selector, null))
         updateToggleIcon()
     }
 
     private fun togglePasswordVisibility() {
         passwordVisible = !passwordVisible
+        cursorStart = selectionStart
+        cursorEnd = selectionEnd
         transformationMethod =
             if (passwordVisible) null else PasswordTransformationMethod.getInstance()
         updateToggleIcon()
+        restoreCursorPosition()
+    }
+
+    private fun restoreCursorPosition() {
+        setSelection(cursorStart, cursorEnd)
     }
 
     private fun updateToggleIcon() {
         toggleDrawable?.let {
             val drawable = if (passwordVisible) {
-                resources.getDrawable(R.drawable.baseline_visibility_24, null)
+                AppCompatResources.getDrawable(context, R.drawable.baseline_visibility_24)
             } else {
-                resources.getDrawable(R.drawable.baseline_disabled_visible_24, null)
+                AppCompatResources.getDrawable(context, R.drawable.baseline_disabled_visible_24)
             }
-            drawable.setBounds(0, 0, drawable.intrinsicWidth, drawable.intrinsicHeight)
+            drawable?.setBounds(0, 0, drawable.intrinsicWidth, drawable.intrinsicHeight)
             setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, drawable, null)
         }
     }

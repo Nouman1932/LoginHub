@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
+import android.util.Patterns
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
@@ -40,6 +41,7 @@ class SignUp : AppCompatActivity(){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up)
 
+
         //Loading
         progressDialog = ProgressDialog(this)
         progressDialog.setTitle("Uploading")
@@ -59,10 +61,25 @@ class SignUp : AppCompatActivity(){
         profileImageView.setOnClickListener {
             selectImage()
         }
+        emailEditText.addTextChangedListener(TextValidationWatcher(emailEditText) { text ->
+            val isValid = isEmailValid(text)
+            isValid // Return the validation result as a Boolean
+        })
+        passwordEditText.addTextChangedListener(TextValidationWatcher(passwordEditText) { text ->
+            text.length >= 6
+        })
+        phoneEditText.addTextChangedListener(TextValidationWatcher(phoneEditText) { text ->
+            text.length >= 11
+        })
+        fullNameEditText.addTextChangedListener(TextValidationWatcher(fullNameEditText) { text ->
+            text.length >= 5
+        })
         registerBtn = findViewById(R.id.buttonRegister)
         registerBtn.setOnClickListener {
             saveUserData()
         }
+
+
     }//End oncreate
     private fun saveUserData() {
         val fullName = fullNameEditText.text.toString().trim()
@@ -220,5 +237,6 @@ class SignUp : AppCompatActivity(){
         val intent = Intent(this, MainActivity ::class.java)
         startActivity(intent)
     }
+
 
 }//end
